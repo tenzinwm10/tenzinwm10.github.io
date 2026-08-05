@@ -1,0 +1,612 @@
+/* ---------------------------------------------------------------------------
+   Tokens
+   --------------------------------------------------------------------------- */
+
+:root {
+  --bg:          #f5f4ef;
+  --bg-hover:    #ebeae5;
+  --fg:          #000000;
+  --muted:       #686868;
+  --link:        #595959;
+  --rule:        #d1d5db; /* timeline spine */
+  --card-border: #d4d3cb; /* secondary card outline */
+  --dot:         #111827;
+
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+               "Liberation Mono", "Courier New", monospace;
+  --font-serif: "Iowan Old Style", Constantia, "Palatino Linotype", Palatino,
+                Georgia, serif;
+
+  --measure: 576px; /* content column */
+  --indent:  24px;  /* entry offset from the spine */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+   --------------------------------------------------------------------------- */
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 20px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.page {
+  padding: 16px;
+}
+
+.column {
+  width: 100%;
+  max-width: var(--measure);
+}
+
+@media (min-width: 768px) {
+  .page {
+    padding: 48px;
+  }
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+}
+
+.serif {
+  font-family: var(--font-serif);
+}
+
+/* ---------------------------------------------------------------------------
+   Header
+   --------------------------------------------------------------------------- */
+
+.masthead {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+@media (min-width: 768px) {
+  .masthead {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.wordmark {
+  font-family: var(--font-serif);
+  font-size: 30px;
+  line-height: 36px;
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  gap: 16px;
+}
+
+.nav a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 8px;
+  text-decoration-color: var(--muted);
+}
+
+.nav a:hover,
+.nav a[aria-current="page"] {
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--fg);
+}
+
+/* ---------------------------------------------------------------------------
+   Prose
+   --------------------------------------------------------------------------- */
+
+.lede {
+  margin: 32px 0;
+}
+
+.prose p {
+  margin: 16px 0;
+}
+
+.prose h2 {
+  margin: 32px 0 8px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.prose a,
+.inline-link {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+
+.prose a:hover,
+.inline-link:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* ---------------------------------------------------------------------------
+   CV rows: a title, a date on the right, one line of detail
+   --------------------------------------------------------------------------- */
+
+.cv {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.cv-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2px 16px;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.cv-title {
+  font-weight: 600;
+}
+
+.cv-date {
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.cv-body {
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--muted);
+}
+
+/* A supporting photo. Rounded, no border or shadow. Inline under the text on a
+   narrow screen; out in the empty space beside it once there is room. */
+.me-photo {
+  display: block;
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+  margin-top: 12px;
+  border-radius: 4px;
+}
+
+@media (min-width: 1120px) {
+  .me-section {
+    position: relative;
+  }
+
+  /* The wrapper spans the gutter so the picture can centre inside it. */
+  .me-media {
+    position: absolute;
+    left: calc(100% + 56px);
+    top: 0;
+    width: calc(100vw - 728px);
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Held to 380px rather than filling the whole gutter. The source is small, so
+     blowing it up just made it soft; at this size the file is a 2x asset and
+     stays crisp. */
+  .me-media .me-photo {
+    width: 380px;
+    max-width: 100%;
+    max-height: calc(100vh - 96px);
+    margin-top: 0;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Timeline
+   --------------------------------------------------------------------------- */
+
+.timeline-wrap {
+  padding-left: 8px;
+}
+
+.timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 0;
+  border-left: 1px solid var(--rule);
+}
+
+/* Fade the spine out at both ends so it doesn't collide with the text above
+   and below it. */
+.timeline::before,
+.timeline::after {
+  content: "";
+  position: absolute;
+  left: -1px;
+  width: 1px;
+  height: 24px;
+}
+
+.timeline::before {
+  top: 0;
+  background: linear-gradient(to top, transparent, var(--bg));
+}
+
+.timeline::after {
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent, var(--bg));
+}
+
+/* --- entry ---------------------------------------------------------------- */
+
+.entry {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-left: var(--indent);
+  padding: 8px 12px;
+  text-decoration: none;
+}
+
+.entry:hover {
+  background: var(--bg-hover);
+}
+
+/* The node sitting on the spine. Its outline punches a gap in the line. */
+.entry::before {
+  content: "";
+  position: absolute;
+  left: -28px;
+  top: 12px;
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--dot);
+  outline: 2px solid var(--bg);
+}
+
+.entry-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.entry-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.entry-date {
+  flex-shrink: 0;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.entry-body {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--muted);
+}
+
+/* --- entry images --------------------------------------------------------- */
+
+.entry-media {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.entry-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #ffffff;
+  border: 1px solid var(--fg);
+  box-shadow: 3px 3px 0 var(--fg);
+}
+
+/* Narrow screens have no room beside the column, so the images sit inline
+   under the entry. */
+@media (max-width: 1119px) {
+  .entry-media {
+    margin-top: 8px;
+  }
+}
+
+/* Wide screens: park them in the empty space to the right of the column and
+   reveal on hover or keyboard focus. */
+@media (min-width: 1120px) {
+  /* Pinned to the viewport, not to the entry. Anchoring it to the entry meant
+     that hovering something low on the page pushed the panel off the bottom of
+     the screen. Fixed positioning keeps it fully visible whichever entry you
+     are on. 680px is the column's right edge (48 padding + 576 column + 56
+     gutter), which is constant because the column is pinned left. */
+  .entry-media {
+    position: fixed;
+    left: 680px;
+    right: 48px;
+    top: 48px;
+    bottom: 48px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    /* Centre the pictures in the gutter rather than letting them hug its top
+       left corner. */
+    align-content: center;
+    align-items: center;
+    justify-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 140ms ease;
+  }
+
+  /* Several images share one row, so the panel stays short however many there
+     are. A lone image gets the whole width to itself. */
+  .entry-media:has(img + img) {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+  }
+
+  /* Every image fits inside the viewport on both axes, with the aspect ratio
+     kept, so the border always hugs the picture and nothing is cut off. Wide
+     images end up limited by the width, tall ones by the height. */
+  .entry-media img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: calc(100vh - 96px);
+  }
+
+  .entry:hover .entry-media,
+  .entry:focus-within .entry-media {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entry-media {
+    transition: none;
+  }
+}
+
+/* --- featured variants ---------------------------------------------------- */
+
+.entry.is-featured {
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid var(--fg);
+  box-shadow: 3px 3px 0 var(--fg);
+  transition: box-shadow 150ms ease, transform 150ms ease;
+}
+
+.entry.is-featured:hover {
+  box-shadow: 5px 5px 0 var(--fg);
+}
+
+.entry.is-featured::before {
+  top: 15px;
+}
+
+.entry.is-quiet {
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--card-border);
+}
+
+.entry.is-featured:hover,
+.entry.is-quiet:hover {
+  background: #ffffff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entry.is-featured {
+    transition: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Post / project detail page
+   --------------------------------------------------------------------------- */
+
+.backlink {
+  display: inline-block;
+  margin-bottom: 32px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--link);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.backlink:hover {
+  color: var(--fg);
+  text-decoration-thickness: 2px;
+}
+
+.post-title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 30px;
+  line-height: 36px;
+  font-weight: 400;
+}
+
+.post-meta {
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--muted);
+}
+
+.prose ul,
+.prose ol {
+  margin: 16px 0;
+  padding-left: 20px;
+}
+
+.prose li {
+  margin: 4px 0;
+}
+
+.prose figure {
+  margin: 32px 0;
+}
+
+.prose figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #ffffff;
+  border: 1px solid var(--fg);
+  box-shadow: 3px 3px 0 var(--fg);
+}
+
+.prose figcaption {
+  margin-top: 12px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--muted);
+}
+
+.prose blockquote {
+  margin: 24px 0;
+  padding-left: 16px;
+  border-left: 1px solid var(--rule);
+  color: var(--muted);
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--card-border);
+  padding: 0 4px;
+}
+
+.prose pre {
+  margin: 24px 0;
+  padding: 12px;
+  overflow-x: auto;
+  background: #ffffff;
+  border: 1px solid var(--card-border);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.prose pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* Two-column key/value block for specs. Collapses on narrow screens. */
+.specs {
+  margin: 24px 0;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.specs > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.specs dt {
+  color: var(--muted);
+}
+
+.specs dd {
+  margin: 0;
+  text-align: right;
+}
+
+/* ---------------------------------------------------------------------------
+   Footer
+   --------------------------------------------------------------------------- */
+
+.site-footer {
+  margin-top: 48px;
+}
+
+.site-footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 0;
+  border-top: 1px solid var(--fg);
+}
+
+.site-footer .name {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 28px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.site-footer .name a {
+  text-decoration: none;
+}
+
+.site-footer .name a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.site-footer .links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+
+.site-footer .links a {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.site-footer .links a:hover {
+  text-decoration-thickness: 2px;
+  color: var(--fg);
+}

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 324" width="576" height="324" role="img" aria-label="Placeholder figure">
+  <rect width="576" height="324" fill="#f5f4ef"/>
+  <g stroke="#d4d3cb" stroke-width="1">
+    <path d="M0 0 L576 324 M576 0 L0 324"/>
+  </g>
+  <text x="288" y="168" text-anchor="middle"
+        font-family="ui-monospace, Menlo, Consolas, monospace"
+        font-size="12" fill="#686868">PLACEHOLDER 576 × 324</text>
+</svg>

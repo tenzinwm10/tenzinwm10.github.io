@@ -1,0 +1,11 @@
+# Full-resolution backups kept beside the web-sized versions. They stay on disk
+# (and in OneDrive) but there is no reason to ship them to the site.
+*.original.*
+
+# OS and editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+.vscode/
+.idea/
