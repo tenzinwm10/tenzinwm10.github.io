@@ -403,6 +403,13 @@ a {
     opacity: 1;
     visibility: visible;
   }
+
+  /* A clicked entry keeps focus, but hovering another entry should preview
+     only that entry rather than layering both image panels. */
+  .timeline:has(.entry:hover) .entry:focus-within:not(:hover) .entry-media {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
