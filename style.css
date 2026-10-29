@@ -308,6 +308,10 @@ a {
   font-weight: 600;
 }
 
+.entry-title a {
+  text-decoration: none;
+}
+
 .entry-date {
   flex-shrink: 0;
   color: var(--muted);
