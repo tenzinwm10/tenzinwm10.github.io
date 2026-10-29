@@ -399,7 +399,8 @@ a {
   }
 
   .entry:hover .entry-media,
-  .entry:focus-within .entry-media {
+  .entry:focus-within .entry-media,
+  .entry.is-default-preview .entry-media {
     opacity: 1;
     visibility: visible;
   }
@@ -407,6 +408,12 @@ a {
   /* A clicked entry keeps focus, but hovering another entry should preview
      only that entry rather than layering both image panels. */
   .timeline:has(.entry:hover) .entry:focus-within:not(:hover) .entry-media {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .timeline:has(.entry:hover) .entry.is-default-preview:not(:hover) .entry-media,
+  .timeline:has(.entry:focus-within) .entry.is-default-preview:not(:focus-within) .entry-media {
     opacity: 0;
     visibility: hidden;
   }
