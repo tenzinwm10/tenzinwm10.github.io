@@ -337,6 +337,10 @@ a {
   box-shadow: 3px 3px 0 var(--fg);
 }
 
+.entry-media img.logo-plate {
+  padding: clamp(32px, 7vw, 64px);
+}
+
 /* Narrow screens have no room beside the column, so the images sit inline
    under the entry. */
 @media (max-width: 1119px) {
