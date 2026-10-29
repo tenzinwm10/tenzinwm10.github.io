@@ -27,6 +27,7 @@ The only text still marked `PLACEHOLDER` is the opening paragraph of
 | `images/robottorso.png`  | humanoid entry, lead image          |
 | `images/actuator.webp`   | humanoid entry                      |
 | `images/motordriver.webp`| humanoid entry                      |
+| `images/fcisar.webp`      | FC Isar Robotics entry              |
 | `images/floorplan.webp`  | venture lab entry                   |
 | `images/redback.webp`    | redback racing entry                |
 | `images/unsw.png`        | education row (has its own alpha)   |
